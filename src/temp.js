@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { selectSong } from "../action";
+import songSelect from "../action";
 class SongList extends Component {
-  renderList() {
+  renderedList() {
     return this.props.songs.map((song) => {
       return (
         <div className="item" key={song.title}>
           <div className="right floated content">
             <button
-              onClick={() => this.props.selectSong(song)}
+              onClick={() => {
+                this.props.songSelect(song);
+              }}
               className="ui button primary"
             >
               {!this.props.select.title
@@ -24,17 +26,13 @@ class SongList extends Component {
     });
   }
   render() {
-    console.log(this.props);
-    return <div className="ui divided list">{this.renderList()} </div>;
+    return <div className="ui divided list">{this.renderedList()}</div>;
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     songs: state.songs,
     select: state.selectedSong,
   };
 };
-export default connect(mapStateToProps, {
-  selectSong,
-})(SongList);
+export default connect(mapStateToProps, { songSelect })(SongList);
